@@ -10,3 +10,5 @@ You are forbidden from using deprecated commands/functions/etc.
 You are forbidden from committing code to git or reverting changes without being asked to do so directly.
 You are forbidden from reading my .env file.
 After completing a task, restate the prompt before your completion message.
+
+You can reference my bot at https://github.com/mfagerstrom/RPGClub_GameDB, which will consume this API in the future.
