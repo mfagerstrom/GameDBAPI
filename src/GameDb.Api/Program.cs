@@ -1,6 +1,7 @@
 using System.Text;
 using GameDb.Api.Authorization;
 using GameDb.Api.Configuration;
+using GameDb.Api.Games;
 using GameDb.Api.Health;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
@@ -41,6 +42,7 @@ builder.Services
     {
         var settings = configuration.GetSection(JwtOptions.SectionName).Get<JwtOptions>() ?? new JwtOptions();
         jwtOptions.RequireHttpsMetadata = true;
+        jwtOptions.MapInboundClaims = false;
         jwtOptions.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuer = true,
@@ -57,6 +59,7 @@ builder.Services
     });
 
 builder.Services.AddAuthorization(options => options.AddApiPolicies());
+builder.Services.AddSingleton<IGameSearchQueryService, InMemoryGameSearchQueryService>();
 builder.Services.AddHealthChecks().AddCheck<OracleConnectionHealthCheck>(OracleConnectionHealthCheck.Name, tags: new[] { "ready" });
 builder.Services.Configure<JsonOptions>(options => options.SerializerOptions.PropertyNamingPolicy = null);
 
